@@ -118,8 +118,9 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(color: Colors.white, fontSize: h / 12),
             ),
             subtitle: Text(
-              'Это платформа, которая сохранила мне много времени и нервов',
+              'Это платформа, которая сохранила мне много времени и сил',
               style: TextStyle(color: Colors.white70, fontSize: h / 18),
+              textAlign: TextAlign.center,
             ),
             gradient: [
               const Color(0xFF532C67),
