@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_presentation_croc/widgets/contacts_widget.dart'
+    show ContactData;
 
 class ThanksSlide extends StatelessWidget {
-
   final double width, height;
 
   ThanksSlide(this.width, this.height);
@@ -16,10 +18,26 @@ class ThanksSlide extends StatelessWidget {
       color: Colors.white,
       child: Stack(
         children: <Widget>[
-        Positioned.fill(child: AnimatedBackground()),
-        Positioned.fill(child: Particles(30)),
-        Positioned.fill(child: CenteredText(this.width, this.height)),
-      ],
+          Positioned.fill(child: AnimatedBackground()),
+          Positioned.fill(child: Particles(30)),
+          Positioned.fill(child: CenteredText(this.width, this.height)),
+          Positioned(
+            child: ContactsBlock(
+              height: height,
+              width: width,
+              contacts: [
+                ContactData("Павел Кондратьев", icon: Icons.account_circle),
+                ContactData("PKondratev@croc.ru", icon: AntDesign.mail),
+                ContactData("@pavelgeme2", icon: AntDesign.instagram),
+                ContactData("@pkondratev",
+                    icon: MaterialCommunityIcons.telegram),
+                ContactData("pavel.kondratev.pk",
+                    icon: AntDesign.facebook_square)
+              ],
+            ),
+            bottom: height / 3, left: 0, right: 0,
+          )
+        ],
       ),
     );
   }
@@ -149,27 +167,77 @@ class AnimatedBackground extends StatelessWidget {
   }
 }
 
-class CenteredText extends StatelessWidget {
+class ContactsBlock extends StatelessWidget {
+  final List<ContactData> contacts;
+  final double width, height;
 
+  const ContactsBlock({Key key, this.contacts, this.width, this.height})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: contacts
+          .map<Widget>((contact) => Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (contact.icon != null)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: Icon(
+                        contact.icon,
+                        color: Colors.white,
+                        size: height / 25,
+                      ),
+                    ),
+                  Text(
+                    contact.text,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: height / 25,
+                    ),
+                  )
+                ],
+              ))
+          .toList(),
+    );
+  }
+}
+
+class CenteredText extends StatelessWidget {
   final width, height;
 
-  const CenteredText(this.width, this.height, {
+  const CenteredText(
+    this.width,
+    this.height, {
     Key key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: RichText(text: TextSpan(
-        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w200, fontSize: height / 15),
-        children: [
-          TextSpan(text: 'From '),
-          TextSpan(text: 'Flutter', style: TextStyle(fontWeight: FontWeight.bold, color: const Color.fromRGBO(87,187,247, 1))),
-          TextSpan(text: ' and '),
-          TextSpan(text: 'CROC', style: TextStyle(fontWeight: FontWeight.bold, color: const Color.fromRGBO(65,146,70, 1))),
-          TextSpan(text: ' with Love!')
-        ]
-      )),
+      child: RichText(
+          text: TextSpan(
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w200,
+                  fontSize: height / 15),
+              children: [
+            TextSpan(text: 'From '),
+            TextSpan(
+                text: 'Flutter',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: const Color.fromRGBO(87, 187, 247, 1))),
+            TextSpan(text: ' and '),
+            TextSpan(
+                text: 'CROC',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: const Color.fromRGBO(65, 146, 70, 1))),
+            TextSpan(text: ' with Love!')
+          ])),
       // child: Text(
       //   "From Flutter and CROC with Love!",
       //   style: TextStyle(color: Colors.white, fontWeight: FontWeight.w200),
