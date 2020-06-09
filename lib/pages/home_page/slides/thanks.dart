@@ -205,7 +205,7 @@ class ContactsBlock extends StatelessWidget {
   }
 }
 
-class CenteredText extends StatelessWidget {
+class CenteredText extends StatefulWidget {
   final width, height;
 
   const CenteredText(
@@ -215,29 +215,51 @@ class CenteredText extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _CenteredTextState createState() => _CenteredTextState();
+}
+
+class _CenteredTextState extends State<CenteredText> {
+  var crossFadeState = CrossFadeState.showFirst;
+
+  @override
   Widget build(BuildContext context) {
     return Center(
-      child: RichText(
-          text: TextSpan(
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w200,
-                  fontSize: height / 15),
-              children: [
-            TextSpan(text: 'From '),
-            TextSpan(
-                text: 'Flutter',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: const Color.fromRGBO(87, 187, 247, 1))),
-            TextSpan(text: ' and '),
-            TextSpan(
-                text: 'CROC',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: const Color.fromRGBO(65, 146, 70, 1))),
-            TextSpan(text: ' with Love!')
-          ])),
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            crossFadeState = crossFadeState == CrossFadeState.showFirst ? 
+              CrossFadeState.showSecond : CrossFadeState.showFirst;
+          });
+        },
+        child: AnimatedCrossFade(
+          crossFadeState: crossFadeState,
+          secondChild: Text('Вопросы', style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w200,
+                      fontSize: widget.height / 15),),
+          firstChild: RichText(
+              text: TextSpan(
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w200,
+                      fontSize: widget.height / 15),
+                  children: [
+                TextSpan(text: 'From '),
+                TextSpan(
+                    text: 'Flutter',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: const Color.fromRGBO(87, 187, 247, 1))),
+                TextSpan(text: ' and '),
+                TextSpan(
+                    text: 'CROC',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: const Color.fromRGBO(65, 146, 70, 1))),
+                TextSpan(text: ' with Love!')
+              ])), duration: const Duration(seconds: 2),
+        ),
+      ),
       // child: Text(
       //   "From Flutter and CROC with Love!",
       //   style: TextStyle(color: Colors.white, fontWeight: FontWeight.w200),
