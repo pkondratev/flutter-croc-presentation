@@ -35,14 +35,14 @@ class _TinkoffExampleSlideState extends State<TinkoffExampleSlide> {
       child: Stack(
         children: [
           Align(
-            alignment: Alignment.topLeft,
+            alignment: Alignment.bottomLeft,
             child: Padding(
               padding: const EdgeInsets.all(18.0),
               child: Text('Тинькофф', style: TextStyle(color: const Color(0xFFFADD56), fontSize: 36),),
             ),
           ),
           Align(
-            alignment: Alignment.topCenter,
+            alignment: Alignment.bottomCenter,
             child: Padding(
               padding: const EdgeInsets.all(18.0),
               child: Text(currentState != 2 
@@ -76,7 +76,7 @@ class _TinkoffExampleSlideState extends State<TinkoffExampleSlide> {
               ],
             )),
             Padding(
-              padding: const EdgeInsets.only(bottom: 8.0, top: 76),
+              padding: const EdgeInsets.only(top: 8.0, bottom: 76),
               child: Container(width: 2, color: Colors.white,),
             ),
             Expanded(child: Stack(
